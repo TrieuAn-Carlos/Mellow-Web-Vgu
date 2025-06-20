@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@import "./landing-page/styles.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+/* Custom styles for landing page */
+@media (max-width: 640px) {
+  .sm\:hidden {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .md\:left-\[2\%\] {
+    left: 2% !important;
+  }
+  
+  .md\:bottom-\[-25\%\] {
+    bottom: -25% !important;
+  }
+  
+  .md\:w-\[350px\] {
+    width: 350px !important;
+  }
+  
+  .md\:h-\[475px\] {
+    height: 475px !important;
+  }
+  
+  .md\:text-\[22px\] {
+    font-size: 22px !important;
+  }
+  
+  .md\:py-\[17px\] {
+    padding-top: 17px !important;
+    padding-bottom: 17px !important;
+  }
+  
+  .md\:px-\[35px\] {
+    padding-left: 35px !important;
+    padding-right: 35px !important;
+  }
+}

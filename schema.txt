@@ -1,0 +1,123 @@
+Here is the Firebase Firestore schema for this project.
+
+## *Updated Schema*
+
+### **Dailies**
+
+Collection: Dailies
+Document ID: YYYY-MM-DD
+
+{
+  // strongly‐typed timestamp for the calendar day
+  date: Timestamp("2025-05-11T00:00:00Z"),
+
+  // if a card was scanned that day, when it happened
+  cardScannedAt: Timestamp("2025-05-11T14:25:00Z"),  // null if none
+
+  // metadata for audit/ordering
+  createdAt: Timestamp("2025-05-01T09:00:00Z"),
+  updatedAt: Timestamp("2025-05-11T15:00:00Z")
+}
+
+
+---
+
+### **Tasks Subcollection** (now supports subtasks)
+
+*Path:* Dailies/{date}/tasks/{taskId}
+
+{
+  // basic task info
+  name: "Call Grandma",
+
+  // normalized status enum – even if paused, stays IN_PROGRESS until COMPLETED
+  status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED",
+
+  // optional planned time
+  plannedAt: Timestamp("2025-05-11T14:30:00Z"),  // null if unscheduled
+
+  // when the user first started the task
+  startedAt: Timestamp("2025-05-11T14:30:22Z"),  // null until they hit "start"
+
+  // when they finished it
+  completedAt: Timestamp("2025-05-11T15:10:00Z"),  // null until COMPLETED
+
+  // keep a simple "order" field for drag-and-drop
+  order: 1,
+
+  // link back to the project document
+  projectRef: "Projects/family",
+
+  // updated every time status changes
+  statusUpdatedAt: Timestamp("2025-05-11T14:30:22Z"),
+
+  // indicates whether the task has subtasks
+  hasSubtasks: true // or false if none
+}
+
+
+---
+
+### **Subtasks Subcollection**
+
+*Path:* Dailies/{date}/tasks/{taskId}/subtasks/{subtaskId}
+
+{
+  name: "Find Grandma's phone number",
+  status: "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED",
+  plannedAt: Timestamp("2025-05-11T14:10:00Z"), // null if unscheduled
+  startedAt: Timestamp("2025-05-11T14:09:00Z"), // null until start
+  completedAt: Timestamp("2025-05-11T14:12:00Z"), // null until completed
+  order: 1
+  // parentTaskRef: "Dailies/2025-05-11/tasks/abc123" // optional
+}
+
+
+---
+
+### **pastJSONs Subcollection (NEW!)**
+
+*Path:* Dailies/{date}/pastJSONs/{pastJSONId}
+
+{
+  // The date and time when this JSON snapshot was stored
+  savedAt: Timestamp("2025-05-11T18:00:00Z"),
+
+  // The full daily JSON snapshot (could be an object or string, depending on your needs)
+  dailyJSON: {
+    // ...exact copy of your daily JSON (including tasks, subtasks, etc.)
+    // You might store the entire object or serialize as a string.
+  }
+  // Optionally, a version number or metadata if you want
+}
+
+
+---
+
+### **Projects** (unchanged)
+
+{
+  name: "Family Stuff",
+  color: "#FFBB33",
+  description: "Calls, events, and family things",
+  createdAt: Timestamp("2025-05-10T09:00:00Z")
+}
+
+
+---
+
+## *Full Structure Example*
+
+Dailies/
+  2025-05-11/
+    (fields)
+    tasks/
+      abc123/
+        (fields)
+        subtasks/
+          def456/
+            (fields)
+    pastJSONs/
+      2025-05-11T18:00:00Z/
+        savedAt: Timestamp(...)
+        dailyJSON: {...full snapshot here...}
