@@ -21,7 +21,6 @@ A delightful and motivating task management application built with Next.js and F
 - **Backend & Database:** [Firebase](https://firebase.google.com/) (Firestore, Auth)
 - **Animation:** [Anime.js](https://animejs.com/)
 - **UI Components:** [shadcn/ui](https://ui.shadcn.com/) (provides accessible and reusable components built on Radix UI)
-- **Testing:** [Jest](https://jestjs.io/)
 
 **Native Web APIs Leveraged:**
 This project also relies on several powerful APIs built directly into the web browser, requiring no external installation:
@@ -35,63 +34,87 @@ This project also relies on several powerful APIs built directly into the web br
 
 ## 🚀 Installation Guide
 
-**1. Prerequisites:**
+This guide will walk you through setting up the project from scratch, assuming you are starting with just a code editor like VS Code.
 
-- Install [Node.js](https://nodejs.org/) (version 18.x or newer recommended).
-- Install [Git](https://git-scm.com/).
+### Step 1: Install Prerequisites (Node.js and Git)
 
-**2. Installation Steps:**
+Our project relies on two essential tools: Node.js (to run the JavaScript code) and Git (to download the source code). Let's make sure you have them.
 
-- Clone this repository to your local machine:
-  ```bash
-  git clone https://github.com/your-username/your-repo-name.git
-  ```
-- Navigate into the project directory:
-  ```bash
-  cd my-nextjs-firebase-app
-  ```
-- Install the required dependencies:
+**1. Check for and Install Node.js:**
+
+- Open a terminal in VS Code (`View` > `Terminal` or `Ctrl+~`).
+- Type `node -v` and press Enter.
+- If you see a version number (like `v18.17.0`), you're all set!
+- **If not, or you get an error:**
+  1.  Visit the [official Node.js website](https://nodejs.org/).
+  2.  Download the installer for the **LTS (Long Term Support)** version. This is the most stable version.
+  3.  Run the installer and follow the on-screen instructions.
+  4.  Restart VS Code to ensure it recognizes the new installation, then check the version again in the terminal.
+
+**2. Check for and Install Git:**
+
+- In the same VS Code terminal, type `git --version` and press Enter.
+- If you see a version number (like `git version 2.39.2`), you have Git.
+- **If not:**
+  1.  Go to the [official Git website](https://git-scm.com/).
+  2.  Download and run the installer for your operating system (Windows, macOS, or Linux).
+  3.  Restart VS Code and check the version again.
+
+### Step 2: Get the Project Code
+
+Now we'll download the project code from its repository.
+
+1.  **Clone the repository:** In the VS Code terminal, run the following command. This will create a `my-nextjs-firebase-app` folder containing the project.
+
+    ```bash
+    git clone https://github.com/TrieuAn-Carlos/Mellow-Web-Vgu.git
+    ```
+
+2.  **Navigate into the project directory:**
+    ```bash
+    cd my-nextjs-firebase-app
+    ```
+    Your terminal prompt should now indicate you are inside the project folder.
+
+### Step 3: Install All Project Libraries (Next.js, Anime.js, etc.)
+
+You don't need to install libraries like Next.js, Anime.js, or shadcn/ui manually. The project lists all of its required libraries (called "dependencies") in a file named `package.json`.
+
+The following command will automatically read that file and download and install every library needed to run the application.
+
+- **Install all dependencies:**
   ```bash
   npm install
   ```
-  or if you use Yarn:
-  ```bash
-  yarn install
-  ```
+  This process might take a few minutes as it downloads all the necessary code into a new `node_modules` folder inside your project.
 
-**3. Firebase Configuration (Important Note):**
+### Step 4: Firebase Configuration (Important Note)
 
-For this project, the Firebase API keys have been hardcoded in `src/lib/firebase.ts` for ease of setup and demonstration.
+For this project, the Firebase API keys have been included directly in the file `src/lib/firebase.ts` for ease of setup and demonstration.
 
 **⚠️ Security Best Practice:**
-In a real-world application, you should **never** hardcode API keys. The standard practice is to use environment variables. To do this, you would:
+In a real-world application, you should **never** hardcode API keys. The standard practice is to use environment variables. To do this, you would create a `.env.local` file and add your keys there. For running this project now, you don't need to change anything.
 
-1. Create a file named `.env.local` in the `my-nextjs-firebase-app` directory.
-2. Add your Firebase project credentials to it like this:
-   ```
-   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
-   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
-   ```
-3. Update `src/lib/firebase.ts` to read these variables from `process.env`.
+### Step 5: Run the Project
 
-**4. Running the Project:**
+You're ready to go! Let's start the local development server.
 
-- Start the development server:
+- **Start the server:**
+
   ```bash
   npm run dev
   ```
-- Open your browser and navigate to `http://localhost:3000`.
 
-**5. Running Tests:**
+- **Look for the confirmation message** in the terminal. It should say something like:
 
-- Run the test suite:
-  ```bash
-  npm run test
   ```
+  ✓ Ready in x.x s
+  - Local:   http://localhost:3000
+  ```
+
+- **View the app:** Open your web browser (like Chrome, Firefox, or Edge) and navigate to `http://localhost:3000`.
+
+You should now see the Mellow task companion app live and running on your machine. Welcome!
 
 ---
 
@@ -179,8 +202,7 @@ my-nextjs-firebase-app/
 │   │   ├── firebase-collections.ts # References to Firestore collections
 │   │   ├── firebase-services.ts    # High-level functions to interact with Firebase (e.g., get tasks)
 │   │   ├── firebase-converters.ts  # Functions to convert data between Firestore and client
-│   │   ├── auto-start-service.ts   # Logic for the auto-start timer feature
-│   │   └── __tests__/     # Unit tests for the library functions
+│   │   └── auto-start-service.ts   # Logic for the auto-start timer feature
 │   │
 │   ├── types/             # TypeScript type definitions
 │   │   ├── schema.ts      # Defines the core data structures (Task, Project, etc.)
@@ -189,7 +211,6 @@ my-nextjs-firebase-app/
 │   └── globals.css        # Global CSS styles
 │
 ├── firebase.json          # Configuration for Firebase (e.g., Firestore rules)
-├── jest.config.js         # Configuration for the Jest testing framework
 ├── next.config.ts         # Configuration for Next.js
 ├── tailwind.config.ts     # Configuration for Tailwind CSS
 └── README.md              # This file
